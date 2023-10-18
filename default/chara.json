@@ -1,0 +1,84 @@
+{
+    "$type": "YukkuriMovieMaker.Project.Items.TachieItem, YukkuriMovieMaker",
+    "CharacterName": "ゆっくり魔理沙",
+    "TachieItemParameter": {
+        "$type": "YukkuriMovieMaker.Plugin.Tachie.AnimationTachie.ItemParameter, YukkuriMovieMaker.Plugin.Tachie.AnimationTachie",
+        "IsHiddenWhenNoSpeech": false,
+        "Eyebrow": "D:\\動画の素材\\まりさ\\眉\\02.png",
+        "Eye": "D:\\動画の素材\\まりさ\\目\\00.png",
+        "Mouth": "D:\\動画の素材\\まりさ\\口\\デフォルト.png",
+        "Hair": null,
+        "Complexion": null,
+        "Body": "D:\\動画の素材\\まりさ\\体\\00.png",
+        "Back1": null,
+        "Back2": null,
+        "Back3": null,
+        "Etc1": null,
+        "Etc2": null,
+        "Etc3": null
+    },
+    "X": {
+        "Values": [
+            {
+                "Value": -678.0
+            }
+        ],
+        "Span": 0.0,
+        "AnimationType": "なし"
+    },
+    "Y": {
+        "Values": [
+            {
+                "Value": 350.5
+            }
+        ],
+        "Span": 0.0,
+        "AnimationType": "なし"
+    },
+    "Opacity": {
+        "Values": [
+            {
+                "Value": 100.0
+            }
+        ],
+        "Span": 0.0,
+        "AnimationType": "なし"
+    },
+    "Zoom": {
+        "Values": [
+            {
+                "Value": 100.0
+            }
+        ],
+        "Span": 0.0,
+        "AnimationType": "なし"
+    },
+    "Rotation": {
+        "Values": [
+            {
+                "Value": 0.0
+            }
+        ],
+        "Span": 0.0,
+        "AnimationType": "なし"
+    },
+    "FadeIn": 0.0,
+    "FadeOut": 0.0,
+    "Blend": "Normal",
+    "IsInverted": false,
+    "IsAlwaysOnTop": true,
+    "IsClippingWithObjectAbove": false,
+    "VideoEffects": [],
+    "Group": 0,
+    "Frame": 0,
+    "Layer": 5,
+    "KeyFrames": {
+        "Frames": [],
+        "Count": 0
+    },
+    "Length": 55,
+    "PlaybackRate": 100.0,
+    "ContentOffset": "00:00:00",
+    "IsLocked": false,
+    "IsHidden": false
+}
