@@ -9,7 +9,7 @@ import sys
 
 # 読み込み
 def read(path):
-    with open(path, "r", encoding="utf-8") as file:
+    with open(path, "r", encoding="utf-8-sig") as file:
         return json.load(file)
 
 
