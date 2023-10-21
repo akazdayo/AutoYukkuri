@@ -38,9 +38,9 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 3. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
 4. ``python generate.py ファイルパス モデル(small推奨) キャラクター名(ゆっくり魔理沙など)``
 
-### Zipファイル
-1. 右上のCodeボタンからDownload Zipを選択してダウンロード
-2. ダウンロードしたZipファイルを解凍
+### ZIPファイル
+1. 右上のCodeボタンからDownload ZIPを選択してダウンロード
+2. ダウンロードしたZIPファイルを解凍
 3. 解凍したフォルダをコマンドプロンプト等で開く
 4. ``pip install -r requirements.txt``を実行する
 5. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
