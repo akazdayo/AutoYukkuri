@@ -161,3 +161,8 @@ cython_debug/
 
 # 音声ファイル
 content/
+# 変換後ファイル
+export/
+
+# 個人ごとに違うため
+default/

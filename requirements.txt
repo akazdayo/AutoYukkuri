@@ -3,4 +3,4 @@ torchaudio==2.1.0+cu118
 torchvision==0.16.0+cu118
 openai-whisper==20230918
 pykakasi==2.2.1
-budoux==0.5.2
+PySimpleGUI==4.60.5

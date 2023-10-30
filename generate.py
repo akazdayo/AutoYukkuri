@@ -1,83 +1,110 @@
 import whisper
 import time
-import budoux
 from pykakasi import kakasi
 import json
 import re
-import sys
-
+import PySimpleGUI as sg
+import threading
 
 # 読み込み
 def read(path):
     with open(path, "r", encoding="utf-8-sig") as file:
         return json.load(file)
 
+class Process:
+    def __init__(self) -> None:
+        self.kakasi = kakasi()
+        self.default_items = read("./default/items.json")
+        self.default_project = read("./default/project.json")
 
-# 書き込み
-def save(path, data):
-    with open(path, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
+    # 数字の変換
+    def convert_numbers(self,word):
+        pattern = r"\d+"
+        matches = re.findall(pattern, word)
+        for match in matches:
+            word = word.replace(match, f"<NUMK VAL={match}>")
+        return word
 
+    # 発音に変換
+    def convert_voice(self,word):
+        converted = self.kakasi.convert(word)
+        result = ""
+        for converted_word in converted:
+            result += f"{converted_word['hira']}"
+        return self.convert_numbers(result)
 
-# 数字変換
-def convert_numbers(word):
-    pattern = r"\d+"
-    matches = re.findall(pattern, word)
-    for match in matches:
-        word = word.replace(match, f"<NUMK VAL={match}>")
-    return word
+    def convert(self,use_model,path):
+        model = whisper.load_model(use_model)
+        print("---変換開始---")
+        start = time.time()
+        result = model.transcribe(
+            path,  # ファイルパス 
+            verbose=True,
+            language="ja",
+        )
+        end = time.time()
+        print(f"---変換終了---\n変換時間{end-start}秒です。")
+        return result
 
+    def write(self,result):
+        items = []
+        project = self.default_project.copy()
+        for i, j in enumerate(result["segments"]):
+            items.append(self.default_items.copy())
+            items[i]["Serif"] = j["text"].replace("!", "")
+            items[i]["Hatsuon"] = self.convert_voice(j["text"])
+            items[i]["VoiceLength"] = "00:00:" + str(j["end"] - j["start"])
+            items[i]["Length"] = int(j["end"] - j["start"]) * 60
+            items[i]["Frame"] = int(j["start"] * 60)
+            items[i]["CharacterName"] = str("ゆっくり霊夢")
+        project["Timeline"]["Items"] = items
+        return project
 
-# ひらがなに変換
-def convert_hiragana(word):
-    kks = kakasi()
-    converted = kks.convert(word)
-    result = ""
-    for converted_word in converted:
-        result += f"{converted_word['hira']}"
-    return convert_numbers(result)
+class App:
+    def __init__(self) -> None:
+        self.process = Process()
 
+        file_input_col = [sg.Text('ファイル'),
+                        sg.InputText(key='INPUT_FILE', enable_events=True, size=(45,1)),
+                        sg.FileBrowse('参照', file_types=(('mp3', '*.mp3'), ('mp4', '*.mp4'),('wav','*.wav')))]
+        model_col = [sg.Text('モデル'),
+                        sg.Listbox(values=('tiny', 'base', 'small', 'medium', 'large', 'large-v2'),
+                                    size=(30, 6),key='MODEL',enable_events=True,default_values='small')]
+        save_path = [[sg.Text('保存先を入力')],
+                    [sg.Input(), sg.FileSaveAs(file_types=(('YMMP Files', '*.ymmp'),),key='SAVE_PATH')]]
+        
+        self.status = [sg.Text('待機中',key='STATUS')]
+        self.layout = [  file_input_col,
+                    model_col,
+                    self.status,
+                    save_path,
+                    [sg.Submit()]]
 
-# 入力
-args = sys.argv
+    def run_process(self,val):
+        result = self.process.convert(val['MODEL'][0],val['INPUT_FILE'])
+        self.status[0].update('出力中')
+        self.proj = self.process.write(result)
+        self.status[0].update('完了')
 
-# 初期化
-parser = budoux.load_default_japanese_parser()
-model = whisper.load_model(args[2])
-default_items = read("./default/items.json")
-default_project = read("./default/project.json")  # .copy()
-chara = read("./default/chara.json")
+    def loop(self):
+        window = sg.Window('Auto Yukkuri', self.layout)
+        self.proj = None
+        # イベントのループ
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
+            if event == 'Submit':
+                with open(values['SAVE_PATH'], "w", encoding='utf-8-sig') as file:
+                    json.dump(self.proj, file, indent=4, ensure_ascii=False)
+                    self.status[0].update('保存完了')
+            elif values['INPUT_FILE'] != '':
+                self.status[0].update('音声認識中')
+                thread = threading.Thread(target=self.run_process, args=(values,))
+                thread.start()
+        # ウィンドウクローズ処理
+        window.close()
 
-# 処理
-print("---変換開始---")
-start = time.time()
-result = model.transcribe(
-    args[1],  # ファイルパス
-    verbose=True,
-    language="ja",
-)
-end = time.time()
-print(f"---変換終了---\n変換時間{end-start}秒です。")
-
-
-# 書き出し
-items = []
-for i, j in enumerate(result["segments"]):
-    items.append(default_items.copy())
-    items[i]["Serif"] = j["text"].replace("!", "")
-    items[i]["Hatsuon"] = convert_hiragana(j["text"])
-    items[i]["VoiceLength"] = "00:00:" + str(j["end"] - j["start"])
-    items[i]["Length"] = int(j["end"] - j["start"]) * 60
-    items[i]["Frame"] = int(j["start"] * 60)
-    items[i]["CharacterName"] = str(sys.argv[3])
-
-chara["Length"] = items[-1]["Length"] + items[-1]["Frame"]
-chara["CharacterName"] = str(sys.argv[3])
-
-default_project["Timeline"]["Items"] = items
-
-# 立ち絵の自動表示を行いたい場合は以下を有効化する
-# default_project["Timeline"]["Items"].append(chara)
-
-file_path = input("---書き出し完了---\nファイル名: ")
-save(f"./export/{file_path}.ymmp", default_project)
+if __name__ == '__main__':
+    app = App()
+    app.loop()
