@@ -161,8 +161,14 @@ cython_debug/
 
 # 音声ファイル
 content/
+temp/
+
 # 変換後ファイル
 export/
 
 # 個人ごとに違うため
 default/
+
+# モデル
+audio_cache/
+pretrained_models/

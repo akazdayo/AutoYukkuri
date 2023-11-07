@@ -4,3 +4,6 @@ torchvision==0.16.0+cu118
 openai-whisper==20230918
 pykakasi==2.2.1
 PySimpleGUI==4.60.5
+speechbrain==0.5.15
+soundfile==0.12.1
+pydub==0.25.1
