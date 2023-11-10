@@ -5,10 +5,11 @@ import json
 import re
 import PySimpleGUI as sg
 import threading
+import multiprocessing
 from pprint import pprint
-from utils.clustering import SpeakerClustering as cluster
+# from utils.clustering import SpeakerClustering as cluster
 import glob
-from utils.popup import AudioCheck
+# from utils.popup import AudioCheck
 import shutil
 import os
 
@@ -76,7 +77,8 @@ class App:
         self.checker = AudioCheck()
 
         file_input_col = [sg.Text('ファイル'),
-                          sg.InputText(key='INPUT_FILE', enable_events=True, size=(45, 1)),
+                          sg.InputText(key='INPUT_FILE',
+                                       enable_events=True, size=(45, 1)),
                           sg.FileBrowse('参照', file_types=(('mp3', '*.mp3'), ('mp4', '*.mp4'), ('wav', '*.wav')))]
         model_col = [sg.Text('モデル'),
                      sg.Listbox(values=('tiny', 'base', 'small', 'medium', 'large', 'large-v2'),
@@ -92,7 +94,8 @@ class App:
                        [sg.Submit()]]
 
     def run_process(self, val):
-        characters = ["ゆっくり霊夢", "ゆっくり魔理沙", "フラン", "トマト", "青い生物", "天の声(霊夢)", "うぷ主", "ゆっくり霊夢(古)", "ゆっくり魔理沙(古)"]
+        characters = ["ゆっくり霊夢", "ゆっくり魔理沙", "フラン", "トマト",
+                      "青い生物", "天の声(霊夢)", "うぷ主", "ゆっくり霊夢(古)", "ゆっくり魔理沙(古)"]
         result = self.process.convert(val['MODEL'][0], val['INPUT_FILE'])
         self.status[0].update('話者認識中')
         self.speaker.triming(result, val['INPUT_FILE'])
@@ -121,8 +124,14 @@ class App:
                     self.status[0].update('保存完了')
             elif values['INPUT_FILE'] != '':
                 self.status[0].update('音声認識中')
-                # thread = threading.Thread(target=self.run_process, args=(values,))
+                # thread = threading.Thread(
+                #    target=self.run_process, args=(values,))
                 # thread.start()
+
+                # process = multiprocessing.Process(
+                #    target=self.run_process, args=(values,))
+                # process.start()
+
                 self.run_process(values)
         # ウィンドウクローズ処理
         window.close()
