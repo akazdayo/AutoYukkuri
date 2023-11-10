@@ -38,7 +38,7 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 3. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
 4. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
 5. ffmpegのインストール方法を検索し、インストールする(雑で申し訳ないです。)
-6. ``python generate.py``を実行する
+6. ``python src/run.py``を実行する
 
 ### ZIPファイル
 1. 右上のCodeボタンからDownload ZIPを選択してダウンロード
@@ -48,7 +48,7 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 5. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
 6. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
 7. ffmpegのインストール方法を検索し、インストールする(雑で申し訳ないです。)
-8. ``python generate.py``を実行する
+8. ``python src/run.py``を実行する
 
 ### project.jsonの書き換え方
 1. YMM4を起動する

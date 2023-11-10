@@ -12,7 +12,7 @@ class SpeakerClustering:
         self.verification = SpeakerRecognition.from_hparams(
             source="speechbrain/spkrec-ecapa-voxceleb", savedir="pretrained_models/spkrec-ecapa-voxceleb")
 
-    def triming(self, result, path):
+    def triming(self, result, path) -> None:
         audio = AudioSegment.from_file(path, format="mp3")
         trim = None
         for i, x in enumerate(result['segments']):
@@ -26,7 +26,8 @@ class SpeakerClustering:
         for i in range(len(all_path)):
             appended = False
             for j in range(len(all_user)):
-                _, prediction = self.verification.verify_files(all_user[j], all_path[i])
+                _, prediction = self.verification.verify_files(
+                    all_user[j], all_path[i])
                 if prediction:
                     # all_user[j].append(all_path[i])
                     chara_list.append(j)
