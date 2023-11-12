@@ -58,9 +58,8 @@ class Layout:
     # ファイル選択ダイアログ
     def pick_files_result(self, e: ft.FilePickerResultEvent):
         self.input_file.value = (
-            ", ".join(map(lambda f: f.path, e.files)
-                      ) if e.files else "キャンセルされました！"
-        )
+            ", ".join(map(lambda f: f.path, e.files))
+            if e.files else "キャンセルされました！")
         self.input_file.update()
 
     def save_file_result(self, e: ft.FilePickerResultEvent):
@@ -68,10 +67,41 @@ class Layout:
         self.output_file.update()
 
 
+class CloseEvent:
+    def __init__(self, page: ft.Page) -> None:
+        self.page = page
+        self.page.window_prevent_close = True
+        self.page.on_window_event = self.window_event
+        self.confirm_dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("確認"),
+            content=ft.Text(
+                "本当にAuto Yukkuriを終了してよろしいですか？\n実行中の場合、作業内容が保存されない場合があります。"),
+            actions=[
+                ft.ElevatedButton("はい", on_click=self.yes_click),
+                ft.OutlinedButton("いいえ", on_click=self.no_click),
+            ],
+            actions_alignment=ft.MainAxisAlignment.END,
+        )
+
+    def window_event(self, e):
+        if e.data == "close":
+            self.page.dialog = self.confirm_dialog
+            self.confirm_dialog.open = True
+            self.page.update()
+
+    def yes_click(self, e):
+        self.page.window_destroy()
+
+    def no_click(self, e):
+        self.confirm_dialog.open = False
+        self.page.update()
+
+
 def create_app(page: ft.Page):
     layout = Layout()
-
     layout.items()  # 初期化
+    CloseEvent(page)
 
     # ダイアログをオーバーレイで非表示にする
     page.overlay.extend([layout.pick_files_dialog])

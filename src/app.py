@@ -12,7 +12,7 @@ class App:
         self.characters = ["ゆっくり霊夢", "ゆっくり魔理沙", "フラン", "トマト",
                            "青い生物", "天の声(霊夢)", "うぷ主", "ゆっくり霊夢(古)", "ゆっくり魔理沙(古)"]
 
-    def run(self, model: str, input_path: str, output_path: str, e=None,) -> None:
+    def run(self, model: str, input_path: str, output_path: str) -> None:
         print("音声認識中")
         result = self.process.convert(
             model, input_path)
