@@ -3,7 +3,6 @@ import time
 from pykakasi import kakasi
 import json
 import re
-from pprint import pprint
 
 
 # 読み込み
@@ -44,7 +43,7 @@ class Process:
             language="ja",
         )
         end = time.time()
-        pprint(f"---変換終了---\n変換時間{end-start}秒です。")
+        print(f"---変換終了---\n変換時間{end-start}秒です。")
         return result
 
     def write(self, result, chara_num: list, chara: list):

@@ -1,10 +1,12 @@
 import flet as ft
 from app import App
+import json
 
 
 class Layout:
-    def __init__(self) -> None:
+    def __init__(self, page: ft.Page) -> None:
         self.app = App()
+        self.page = page
 
     def items(self):
         self.pick_files_dialog = ft.FilePicker(
@@ -42,29 +44,37 @@ class Layout:
                 ft.dropdown.Option("medium"),
                 ft.dropdown.Option("large"),
                 ft.dropdown.Option("large-v2"),
+                ft.dropdown.Option("large-v3"),
             ],
             value="small",
         )
 
         self.run_button = ft.ElevatedButton(
-            "Run", color=ft.colors.GREEN, on_click=self.run)
-
-    def run(self, e) -> None:
-        self.app.run(
-            model=self.model.value,
-            input_path=self.input_file.value,
-            output_path=self.output_file.value)
+            "Run",
+            color=ft.colors.GREEN,
+            on_click=lambda _: self.app.run(
+                model=self.model.value,
+                input_path=self.input_file.value,
+                output_path=self.output_file.value,
+                page=self.page,
+            ))
 
     # ファイル選択ダイアログ
     def pick_files_result(self, e: ft.FilePickerResultEvent):
         self.input_file.value = (
             ", ".join(map(lambda f: f.path, e.files))
-            if e.files else "キャンセルされました！")
+            if e.files else "キャンセルされました")
         self.input_file.update()
 
     def save_file_result(self, e: ft.FilePickerResultEvent):
-        self.output_file.value = e.path if e.path else "保存がキャンセルされました！"
+        self.output_file.value = e.path if e.path else "キャンセルされました"
         self.output_file.update()
+        if self.output_file.value != "キャンセルされました" and self.output_file.value != "保存したファイルはここに表示されます" and self.page.session.contains_key("project"):
+            with open(self.output_file.value, "w", encoding='utf-8-sig') as file:
+                json.dump(self.page.session.get("project"),
+                          file, indent=4, ensure_ascii=False)
+            self.page.session.remove("project")
+            print("保存しました。")
 
 
 class CloseEvent:
@@ -99,7 +109,7 @@ class CloseEvent:
 
 
 def create_app(page: ft.Page):
-    layout = Layout()
+    layout = Layout(page)
     layout.items()  # 初期化
     CloseEvent(page)
 
