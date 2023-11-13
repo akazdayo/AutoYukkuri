@@ -1,3 +1,5 @@
+import os
+import shutil
 import flet as ft
 from app import App
 import json
@@ -118,6 +120,9 @@ def create_app(page: ft.Page):
     layout = Layout(page)
     layout.items()  # 初期化
     CloseEvent(page)
+    # tempフォルダが存在した場合削除
+    if os.path.exists("./temp"):
+        shutil.rmtree("./temp")
 
     # ダイアログをオーバーレイで非表示にする
     page.overlay.extend([layout.pick_files_dialog])
