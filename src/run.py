@@ -1,12 +1,14 @@
 import flet as ft
 from app import App
 import json
+from status import StatusUpdater as updater
 
 
 class Layout:
     def __init__(self, page: ft.Page) -> None:
         self.app = App()
         self.page = page
+        self.updater = updater(page)
 
     def items(self):
         self.pick_files_dialog = ft.FilePicker(
@@ -16,6 +18,9 @@ class Layout:
             on_result=self.save_file_result)
         self.input_file = ft.Text("選択したファイルはここに表示されます")
         self.output_file = ft.Text("保存したファイルはここに表示されます")
+
+        self.status = ft.Text("ステータス")
+        self.page.session.set("status_component", self.status)
 
         self.input_button = ft.ElevatedButton(
             "参照",
@@ -74,6 +79,7 @@ class Layout:
                 json.dump(self.page.session.get("project"),
                           file, indent=4, ensure_ascii=False)
             self.page.session.remove("project")
+            self.updater.checker("保存しました。")
             print("保存しました。")
 
 
@@ -119,6 +125,7 @@ def create_app(page: ft.Page):
 
     page.add(
         layout.model,
+        layout.status,
         ft.Row(
             [
                 layout.input_button,
