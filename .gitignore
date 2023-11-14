@@ -172,3 +172,7 @@ default/
 # モデル
 audio_cache/
 pretrained_models/
+
+# Nuitka
+*.build/
+*.dist/

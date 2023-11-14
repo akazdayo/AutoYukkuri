@@ -36,6 +36,7 @@ class SpeakerClustering:
             if not appended:
                 all_user.append(all_path[i])
                 chara_list.append(len(all_user)-1)
+        # pprint(chara_list)
         return (all_user, chara_list)
 
     def run_whisper(self, use_model, path):
@@ -54,6 +55,6 @@ if __name__ == "__main__":
     data = speaker.run_whisper("small", filepath)
     speaker.triming(data, filepath)
     files = glob.glob(".\\temp\\*.wav")
-    print(files)
+    # print(files)
     users = speaker.clustering(files)
     pprint(users)

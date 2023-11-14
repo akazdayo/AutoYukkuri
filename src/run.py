@@ -21,7 +21,7 @@ class Layout:
         self.input_file = ft.Text("選択したファイルはここに表示されます")
         self.output_file = ft.Text("保存したファイルはここに表示されます")
 
-        self.status = ft.Text("ステータス")
+        self.status = ft.Text("待機中")
         self.page.session.set("status_component", self.status)
 
         self.input_button = ft.ElevatedButton(
@@ -127,6 +127,7 @@ def create_app(page: ft.Page):
     # ダイアログをオーバーレイで非表示にする
     page.overlay.extend([layout.pick_files_dialog])
     page.overlay.extend([layout.save_files_dialog])
+    page.scroll = True
 
     page.add(
         layout.model,

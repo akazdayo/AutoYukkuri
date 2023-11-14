@@ -5,6 +5,7 @@ import json
 import platform
 import flet as ft
 from status import StatusUpdater as updater
+from player import Player
 
 
 class App:
@@ -28,6 +29,8 @@ class App:
         else:
             files = glob.glob("./temp/*.wav")
         users = self.speaker.clustering(files)
+        play = Player(page, users[0], self.characters)
+        self.characters = play.show(len(users[0]))
         print("出力中")
         self.status_checker.checker("出力中")
         proj = self.process.write(result, users[1], self.characters)
