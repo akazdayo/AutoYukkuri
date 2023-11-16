@@ -6,15 +6,55 @@ import json
 from status import StatusUpdater as updater
 
 
+class AddCharacter:
+    def __init__(self, page: ft.Page) -> None:
+        self.page = page
+        # self.page.client_storage.clear()
+        if not self.page.client_storage.contains_key("characters"):
+            self.page.client_storage.set("characters", ["ゆっくり霊夢", "ゆっくり魔理沙"])
+        self.characters: list = self.page.client_storage.get("characters")
+
+    def change_chara(self):
+        charalist = []
+        for i in self.characters:
+            charalist.append(ft.dropdown.Option(i))
+        return charalist
+
+    def find_option(self, option_name, d: ft.Dropdown):
+        for option in d.options:
+            if option_name == option.key:
+                return option
+        return None
+
+    def add_clicked(self, e, d: ft.Dropdown, option_textbox: ft.TextField):
+        d.options.append(ft.dropdown.Option(option_textbox.value))
+        d.value = option_textbox.value
+        self.characters.append(option_textbox.value)
+        option_textbox.value = ""
+        self.page.client_storage.set("characters", self.characters)
+        print(self.page.client_storage.get("characters"))
+        self.page.update()
+
+    def delete_clicked(self, e, d: ft.Dropdown):
+        option = self.find_option(d.value, d)
+        if option != None:
+            d.options.remove(option)
+            self.characters.remove(d.value)
+            self.page.client_storage.set("characters", self.characters)
+            print(self.page.client_storage.get("characters"))
+            self.page.update()
+
+
 class Layout:
     def __init__(self, page: ft.Page) -> None:
         self.app = App()
         self.page = page
         self.updater = updater(page)
+        self.chara = AddCharacter(page)
 
     def items(self):
         self.pick_files_dialog = ft.FilePicker(
-            on_result=self.pick_files_result)
+            on_result=lambda e: self.pick_files_result(e, self.run_button))
 
         self.save_files_dialog = ft.FilePicker(
             on_result=self.save_file_result)
@@ -64,14 +104,26 @@ class Layout:
                 input_path=self.input_file.value,
                 output_path=self.output_file.value,
                 page=self.page,
-            ))
+            ),
+            disabled=True
+        )
+        chara_option = self.chara.change_chara()
+        self.d = ft.Dropdown(label="キャラクターリスト", width=300,
+                             options=chara_option)
+        self.option_textbox = ft.TextField(hint_text="キャラクター名を入力")
+        self.add = ft.ElevatedButton(
+            "追加", on_click=lambda e: self.chara.add_clicked(e, self.d, self.option_textbox))
+        self.delete = ft.OutlinedButton(
+            "選択中のゆっくりを削除", on_click=lambda e: self.chara.delete_clicked(e, self.d))
 
     # ファイル選択ダイアログ
-    def pick_files_result(self, e: ft.FilePickerResultEvent):
+    def pick_files_result(self, e: ft.FilePickerResultEvent, button: ft.ElevatedButton):
         self.input_file.value = (
             ", ".join(map(lambda f: f.path, e.files))
             if e.files else "キャンセルされました")
         self.input_file.update()
+        button.disabled = False
+        button.update()
 
     def save_file_result(self, e: ft.FilePickerResultEvent):
         self.output_file.value = e.path if e.path else "キャンセルされました"
@@ -81,7 +133,8 @@ class Layout:
                 json.dump(self.page.session.get("project"),
                           file, indent=4, ensure_ascii=False)
             self.page.session.remove("project")
-            self.updater.checker("保存しました。")
+            self.status.value = "保存しました"
+            self.status.update()
             print("保存しました。")
 
 
@@ -145,6 +198,16 @@ def create_app(page: ft.Page):
                 layout.output_file,
             ]
         ),
+        ft.Divider(height=50),
+        ft.Text("ゆっくりを追加", style=ft.TextThemeStyle.TITLE_LARGE),
+        layout.d,
+        ft.Row(
+            [
+                layout.option_textbox,
+                layout.add,
+                layout.delete
+            ]
+        )
     )
 
 
