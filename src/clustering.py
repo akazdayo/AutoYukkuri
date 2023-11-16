@@ -13,7 +13,7 @@ class SpeakerClustering:
             source="speechbrain/spkrec-ecapa-voxceleb", savedir="pretrained_models/spkrec-ecapa-voxceleb")
 
     def triming(self, result, path) -> None:
-        audio = AudioSegment.from_file(path, format="mp3")
+        audio = AudioSegment.from_file(path)
         trim = None
         for i, x in enumerate(result['segments']):
             trim = audio[int(x['start'])*1000:int(x['end'])*1000]
