@@ -80,6 +80,8 @@ class Layout:
             ),
         )
 
+        self.speaker_switch = ft.Switch(label="話者認識", value=True)
+
         # ドロップダウンメニュー
         self.model = ft.Dropdown(
             label="モデル",
@@ -103,6 +105,7 @@ class Layout:
                 model=self.model.value,
                 input_path=self.input_file.value,
                 output_path=self.output_file.value,
+                speaker_switch=self.speaker_switch.value,
                 page=self.page,
             ),
             disabled=True
@@ -185,6 +188,7 @@ def create_app(page: ft.Page):
     page.add(
         layout.model,
         layout.status,
+        layout.speaker_switch,
         ft.Row(
             [
                 layout.input_button,
