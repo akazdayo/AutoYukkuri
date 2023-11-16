@@ -176,3 +176,6 @@ pretrained_models/
 # Nuitka
 *.build/
 *.dist/
+
+# VSCode
+.vscode/
