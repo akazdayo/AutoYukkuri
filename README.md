@@ -53,12 +53,12 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 ### project.jsonの書き換え方
 1. YMM4を起動する
 2. 使用する予定のキャラクターの立ち絵すべてをタイムラインに配置する
-3. defaultフォルダのproject.jsonに上書き保存する
+3. defaultフォルダのproject.jsonにjsonファイルとして上書き保存する
 
 ### items.jsonの書き換え方
 1. YMM4を起動する
 2. 好きなキャラクターで一言だけ喋らせる
-3. defaultフォルダのitems.jsonに上書き保存する
+3. defaultフォルダのitems.jsonにjsonファイルとして上書き保存する
 4. items.jsonを開く
 5. TimelineのItemsのみを残し、それ以外を削除
 6. VoiceCacheの中を空の文字列にする
@@ -74,6 +74,10 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
   "Hatsuon": "こんばんわ",
 ...
 ```
+
+## 既知のバグ
+既知のバグは以下にまとめています。
+https://github.com/akazdayo/AutoYukkuri/blob/main/README.md
 
 ## アンインストール方法
 フォルダを消しただけでは残骸ファイルが残ってしまうので、以下の方法で削除してください。
