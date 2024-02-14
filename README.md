@@ -77,7 +77,7 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 
 ## 既知のバグ
 既知のバグは以下にまとめています。
-https://github.com/akazdayo/AutoYukkuri/blob/main/README.md
+https://github.com/akazdayo/AutoYukkuri/blob/main/bug.md
 
 ## アンインストール方法
 フォルダを消しただけでは残骸ファイルが残ってしまうので、以下の方法で削除してください。
