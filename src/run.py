@@ -144,7 +144,7 @@ class Layout:
 class CloseEvent:
     def __init__(self, page: ft.Page) -> None:
         self.page = page
-        self.page.window_prevent_close = True
+        self.page.window.prevent_close = True
         self.page.on_window_event = self.window_event
         self.confirm_dialog = ft.AlertDialog(
             modal=True,
@@ -160,12 +160,12 @@ class CloseEvent:
 
     def window_event(self, e):
         if e.data == "close":
-            self.page.dialog = self.confirm_dialog
+            self.page.overlay.append(self.confirm_dialog)
             self.confirm_dialog.open = True
             self.page.update()
 
     def yes_click(self, e):
-        self.page.window_destroy()
+        self.page.window.destroy()
 
     def no_click(self, e):
         self.confirm_dialog.open = False
