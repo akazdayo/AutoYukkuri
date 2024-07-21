@@ -1,4 +1,4 @@
-# Auto Yukkuri 
+# Auto Yukkuri
 ## 概要
 あなたが生声で実況した動画から自動でYMM4プロジェクト(ゆっくり実況)を作成します。
 ```
@@ -29,27 +29,25 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 |Python| 3.8 ~ 3.11|
 
 ## インストールと実行
-[モデル一覧](https://github.com/openai/whisper#available-models-and-languages)  
+[モデル一覧](https://github.com/openai/whisper#available-models-and-languages)
 精度が良くない場合はモデルを変更してみてください。
-
-### コマンドライン
-1. ``git clone https://github.com/akazdayo/auto-yukkuri.git``
-2. ``pip install -r requirements.txt``
-3. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
-4. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
-5. ffmpegのインストール方法を検索し、インストールする(雑で申し訳ないです。)
-6. ``python src/run.py``を実行する
 
 ### ZIPファイル
 1. 右上のCodeボタンからDownload ZIPを選択してダウンロード
 2. ダウンロードしたZIPファイルを解凍
-3. 解凍したフォルダをコマンドプロンプト等で開く
-4. ``pip install -r requirements.txt``を実行する
+3. PowerShellを起動し、``cd AutoYukkuriのファイルパス``を実行(例: ``cd C:\Users\akazdayo\Downloads\AutoYukkuri-main``)
+4. ``python install.py``を実行する -> FFmpegのインストールを求められたらインストールする
 5. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
 6. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
-8. ffmpegのインストール方法を検索し、インストールする(雑で申し訳ないです。)
-9. PowerShellを起動し、``cd AutoYukkuriのファイルパス``を実行
-10. ``python src/run.py``を実行する
+7. ``python src/run.py``を実行する
+
+
+### コマンドライン(上級者向け)
+1. ``git clone https://github.com/akazdayo/auto-yukkuri.git``
+2. ``cd auto-yukkuri && python install.py``
+3. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
+4. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
+5. ``python src/run.py``を実行する
 
 ### project.jsonの書き換え方
 1. YMM4を起動する
