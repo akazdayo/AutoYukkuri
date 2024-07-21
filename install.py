@@ -57,11 +57,12 @@ def check_other_install():
             cuda_version_line = lines[3]
             cuda_version = cuda_version_line.split(", ")[1].split(" ")[1]
             print(f"CUDA version: {cuda_version}")
-            if cuda_version != "11.8" or cuda_version != "12.1":
+            if cuda_version != "11.8" and cuda_version != "12.1":
                 print("CUDAのバージョンが11.8または12.1ではありません。\n11.8または12.1をインストールしてください。")
                 sys.exit(1)
 
-            install_pip_package(f"torch --index-url https://download.pytorch.org/whl/cu{cuda_version.replace(".","")}")
+            #install_pip_package(f"torch --index-url https://download.pytorch.org/whl/cu{cuda_version.replace(".","")}")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "torch", "--index-url", f"https://download.pytorch.org/whl/cu{cuda_version.replace('.','')}"])
         except FileNotFoundError:
             print("CUDAがインストールされていません。バージョン11.8または12.1をインストールしてください。")
             sys.exit(1)
