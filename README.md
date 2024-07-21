@@ -36,7 +36,8 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 1. 右上のCodeボタンからDownload ZIPを選択してダウンロード
 2. ダウンロードしたZIPファイルを解凍
 3. PowerShellを起動し、``cd AutoYukkuriのファイルパス``を実行(例: ``cd C:\Users\akazdayo\Downloads\AutoYukkuri-main``)
-4. ``python install.py``を実行する -> FFmpegのインストールを求められたらインストールする
+4. ``python install.py``を実行する   -> FFmpegのインストールを求められたらインストールする
+ * GPUを利用する場合は[GPUを使用する場合](#gpuを使用する場合)を確認してください。
 5. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
 6. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
 7. ``python src/run.py``を実行する
@@ -45,6 +46,7 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
 ### コマンドライン(上級者向け)
 1. ``git clone https://github.com/akazdayo/auto-yukkuri.git``
 2. ``cd auto-yukkuri && python install.py``
+ * GPUを利用する場合は[GPUを使用する場合](#gpuを使用する場合)を確認してください。
 3. [project.jsonの書き換え方](#projectjsonの書き換え方)に沿って変更
 4. [items.jsonの書き換え方](#itemsjsonの書き換え方)に沿って変更
 5. ``python src/run.py``を実行する
@@ -73,6 +75,10 @@ https://github.com/akazdayo/AutoYukkuri/assets/82073147/1b4d91e8-2850-4f66-9513-
   "Hatsuon": "こんばんわ",
 ...
 ```
+
+### GPUを使用する場合
+1. ``python install.py --gpu``を実行する
+* CUDAのインストールが求められた場合はバージョン12.1または11.8をインストールしてください。
 
 ## 既知のバグ
 既知のバグは以下にまとめています。

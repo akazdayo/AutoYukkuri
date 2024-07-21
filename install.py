@@ -72,7 +72,7 @@ def check_other_install():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', action='store_true',
-                        help='Use GPU acceleration')
+                        help='Use GPU')
     args = parser.parse_args()
 
     pip_install()
