@@ -37,6 +37,7 @@ class Process:
         model = whisper.load_model(use_model)
         print("---変換開始---")
         start = time.time()
+        print(path)
         result = model.transcribe(
             path,  # ファイルパス
             verbose=True,

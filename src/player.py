@@ -1,5 +1,5 @@
 import flet as ft
-import winsound
+#import winsound
 
 
 class Player:

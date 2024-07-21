@@ -29,6 +29,7 @@ class App:
             else:
                 files = glob.glob("./temp/*.wav")
             users = self.speaker.clustering(files)
+            self.status_checker.checker("対応する話者を選択してください")
             play = Player(page, users[0], self.characters)
             self.characters = play.show(len(users[0]))
             print("出力中")

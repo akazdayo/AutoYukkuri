@@ -1,4 +1,4 @@
-from speechbrain.pretrained import SpeakerRecognition
+from speechbrain.inference.speaker import SpeakerRecognition
 from pprint import pprint
 from pydub import AudioSegment
 import glob
@@ -37,6 +37,7 @@ class SpeakerClustering:
                 all_user.append(all_path[i])
                 chara_list.append(len(all_user)-1)
         # pprint(chara_list)
+        print("終了")
         return (all_user, chara_list)
 
     def run_whisper(self, use_model, path):
