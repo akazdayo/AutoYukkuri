@@ -179,3 +179,5 @@ pretrained_models/
 
 # VSCode
 .vscode/
+
+.DS_STORE
