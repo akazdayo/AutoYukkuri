@@ -63,7 +63,6 @@ def check_other_install():
                 )
                 sys.exit(1)
 
-            # install_pip_package(f"torch --index-url https://download.pytorch.org/whl/cu{cuda_version.replace(".","")}")
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "uninstall", "torch", "-y"]
             )

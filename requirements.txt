@@ -6,3 +6,6 @@ soundfile==0.12.1
 pydub==0.25.1
 flet==0.23.2
 numpy==1.26.4
+alkana==0.0.3
+mecab-python3==1.0.9
+ipadic==1.0.0
