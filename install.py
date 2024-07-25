@@ -66,7 +66,6 @@ def check_other_install():
         except FileNotFoundError:
             print("CUDAがインストールされていません。バージョン11.8または12.1をインストールしてください。")
             sys.exit(1)
-    print("全てのパッケージがインストールされています。")
 
 
 if __name__ == "__main__":
@@ -75,5 +74,6 @@ if __name__ == "__main__":
                         help='Use GPU')
     args = parser.parse_args()
 
-    pip_install()
     check_other_install()
+    pip_install()
+    print("全てのパッケージがインストールされています。")
