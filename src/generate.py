@@ -1,6 +1,5 @@
 import whisper
 import time
-from pykakasi import kakasi
 import json
 from hatsuon import Hatsuon
 

@@ -34,7 +34,6 @@ class SpeakerClustering:
                             all_user[j], all_path[i]
                         )
                         if prediction:
-                            # all_user[j].append(all_path[i])
                             chara_list.append(j)
                             appended = True
                             break
