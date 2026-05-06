@@ -180,4 +180,21 @@ pretrained_models/
 # VSCode
 .vscode/
 
-.DS_STORE
+.DS_Store
+
+# Rust
+target/
+*.rs.bk
+
+# Python (uv)
+.venv/
+.uv/
+
+# Nix
+result
+result-*
+
+# env files
+.env
+.env.*
+!.env.example
