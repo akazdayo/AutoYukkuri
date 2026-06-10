@@ -1,4 +1,4 @@
-torch==2.3.0
+torch==2.12.0
 openai-whisper==20231106
 pykakasi==2.3.0
 speechbrain==1.0.0
